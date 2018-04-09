@@ -4,8 +4,19 @@ import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { loginUser } from '../actions';
-import { Card, CardSection, Button, Input, Spinner } from './common';
+import { Card, Button, Input, Spinner } from './common';
 
+const styles = {
+  containerStyle: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  buttonContainerStyle: {
+    height: 100,
+    width: '100%',
+  },
+};
 class LoginForm extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
@@ -22,7 +33,7 @@ class LoginForm extends Component {
       return <Spinner size="small" />;
     }
     return (
-      <Button onPress={() => this.props.loginUser(this.state)}>
+      <Button raised onPress={() => this.props.loginUser(this.state)}>
         Login
       </Button>
     );
@@ -30,26 +41,24 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.containerStyle}>
         <Card>
-          <CardSection>
+          <View>
             <Input
               label="Email"
               onChangeText={email => this.setState({ email })}
               placeholder="user@gmail.com"
             />
-          </CardSection>
-          <CardSection>
             <Input
               label="Password"
               onChangeText={password => this.setState({ password })}
               placeholder="password"
               secureTextEntry
             />
-          </CardSection>
-          <CardSection>
-            {this.renderButton()}
-          </CardSection>
+            <View className="login__button-container" style={styles.buttonContainerStyle}>
+              {this.renderButton()}
+            </View>
+          </View>
         </Card>
         <Text onPress={() => Actions.signup()}>Need an account? Sign up.</Text>
       </View>

@@ -1,37 +1,29 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { BLACK } from '../../constants/style';
+import { Button as RNEButton } from 'react-native-elements';
 
 const styles = {
-  textStyle: {
-    alignSelf: 'center',
-    color: BLACK,
-    fontSize: 16,
-    fontWeight: '600',
-  },
   buttonStyle: {
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: BLACK,
-    padding: 10,
-    marginLeft: 5,
-    marginRight: 5,
-    flex: 1,
+    marginTop: 8,
   },
 };
 
+const primaryProps = {
+  backgroundColor: '#03a9fa',
+};
+
 const Button = (props) => {
-  const { buttonStyle, textStyle } = styles;
-  const { style, onPress } = props;
+  const {
+    onPress, icon, children, ...rest
+  } = props;
   return (
-    <TouchableOpacity
-      style={{ ...buttonStyle, ...style }}
+    <RNEButton
+      icon={icon}
+      title={children}
+      {...styles}
+      {...primaryProps}
+      {...rest}
       onPress={() => onPress()}
-    >
-      <Text style={textStyle}>
-        {props.children}
-      </Text>
-    </TouchableOpacity>
+    />
   );
 };
 

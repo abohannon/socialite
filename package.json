@@ -1,6 +1,9 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
+  "scripts": {
+    "react-devtools": "react-devtools"
+  },
   "dependencies": {
     "expo": "^26.0.0",
     "firebase": "^4.12.1",
@@ -21,6 +24,7 @@
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
-    "eslint-plugin-react-native": "^3.2.1"
+    "eslint-plugin-react-native": "^3.2.1",
+    "react-devtools": "^3.2.1"
   }
 }

@@ -4,6 +4,13 @@ import { connect } from 'react-redux';
 import { Card, CardSection, Button, Input, Spinner } from './common';
 import { createUser } from '../actions';
 
+const styles = {
+  buttonContainerStyle: {
+    height: 100,
+    width: '100%',
+  },
+};
+
 class SignupForm extends Component {
   state = {
     firstName: '',
@@ -17,38 +24,32 @@ class SignupForm extends Component {
     }
 
     return (
-      <Button onPress={() => this.props.createUser(this.state)}>Sign up</Button>
+      <Button raised onPress={() => this.props.createUser(this.state)}>Sign up</Button>
     );
   }
 
   render() {
     return (
       <Card>
-        <CardSection>
-          <Input
-            label="First Name"
-            onChangeText={firstName => this.setState({ firstName })}
-            placeholder="John"
-          />
-        </CardSection>
-        <CardSection>
-          <Input
-            label="Email"
-            onChangeText={email => this.setState({ email })}
-            placeholder="user@gmail.com"
-          />
-        </CardSection>
-        <CardSection>
-          <Input
-            label="Password"
-            onChangeText={password => this.setState({ password })}
-            placeholder="password"
-            secureTextEntry
-          />
-        </CardSection>
-        <CardSection>
+        <Input
+          label="First Name"
+          onChangeText={firstName => this.setState({ firstName })}
+          placeholder="John"
+        />
+        <Input
+          label="Email"
+          onChangeText={email => this.setState({ email })}
+          placeholder="user@gmail.com"
+        />
+        <Input
+          label="Password"
+          onChangeText={password => this.setState({ password })}
+          placeholder="password"
+          secureTextEntry
+        />
+        <View style={styles.buttonContainerStyle}>
           {this.renderButton()}
-        </CardSection>
+        </View>
       </Card>
     );
   }
