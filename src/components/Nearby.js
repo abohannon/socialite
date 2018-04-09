@@ -3,18 +3,21 @@ import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import firebase from 'firebase';
 import { Card } from './common';
-import { fetchUserLocation, fetchNearby } from '../actions';
+import { fetchUserLocation, fetchYelpData } from '../actions';
 
 class Nearby extends Component {
-  // componentDidMount() {
-  //   const { fetchUserLocation, fetchNearby, location } = this.props;
-  //   // fetch user location before component mounts
-  //   fetchUserLocation();
-  //   fetchNearby({
-  //     latitude: location ? location.coords.latitude : '',
-  //     longitude: location ? location.coords.longitude : '',
-  //   });
-  // }
+  componentDidMount() {
+    const { fetchUserLocation } = this.props;
+    fetchUserLocation();
+  }
+
+  componentDidUpdate(nextProps) {
+    const { fetchYelpData, location } = this.props;
+
+    if (this.props.location !== nextProps.location) {
+      fetchYelpData(location.coords);
+    }
+  }
 
   render() {
     const { location } = this.props;
@@ -44,4 +47,4 @@ class Nearby extends Component {
 
 const mapStateToProps = state => ({ location: state.user.location });
 
-export default connect(mapStateToProps, { fetchUserLocation, fetchNearby })(Nearby);
+export default connect(mapStateToProps, { fetchUserLocation, fetchYelpData })(Nearby);
