@@ -26,10 +26,12 @@ export const fetchYelpData = params => async (dispatch) => {
   const endpoint = `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}`;
 
   try {
+    // receive the response
     const response = await fetch(
       endpoint,
       options,
     );
+    // process the response as JSON
     const responseJson = await response.json();
     if (response.status !== 200) {
       dispatch({ type: FETCH_YELP_FAIL, payload: response });
