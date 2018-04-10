@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { Card } from 'react-native-elements';
 import { loginUser } from '../actions';
-import { Card, Button, Input, Spinner } from './common';
+import { Button, Input, Spinner } from './common';
+
 
 const styles = {
   containerStyle: {

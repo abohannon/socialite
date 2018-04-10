@@ -36,7 +36,7 @@ export const fetchYelpData = params => async (dispatch) => {
     if (response.status !== 200) {
       dispatch({ type: FETCH_YELP_FAIL, payload: response });
     } else {
-      dispatch({ type: FETCH_YELP_SUCCESS, payload: responseJson });
+      dispatch({ type: FETCH_YELP_SUCCESS, payload: responseJson.businesses });
     }
   } catch (err) {
     dispatch({ type: FETCH_YELP_FAIL, payload: err });

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, CardSection, Button, Input, Spinner } from './common';
+import { Card } from 'react-native-elements';
+import { Button, Input, Spinner } from './common';
 import { createUser } from '../actions';
 
 const styles = {

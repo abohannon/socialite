@@ -3,7 +3,10 @@ import { Button as RNEButton } from 'react-native-elements';
 
 const styles = {
   buttonStyle: {
-    marginTop: 8,
+    borderRadius: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0,
   },
 };
 

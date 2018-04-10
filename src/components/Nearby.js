@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { ScrollView, View, Text, Image } from 'react-native';
 import firebase from 'firebase';
-import { Card } from './common';
+import { Card, Spinner } from './common';
 import { fetchUserLocation, fetchYelpData } from '../actions';
+import BusinessCard from './BusinessCard';
 
 class Nearby extends Component {
   componentDidMount() {
@@ -19,32 +20,43 @@ class Nearby extends Component {
     }
   }
 
+  renderCards() {
+    const { yelp } = this.props;
+
+    return yelp.data.map((item, index) => (
+      <BusinessCard
+        key={item.name}
+        imageUri={item.image_url}
+        name={item.name}
+        rating={item.rating}
+        reviewCount={item.review_count}
+        url={item.url}
+        location={item.location}
+        categories={item.categories}
+      />
+    ));
+  }
+
   render() {
-    const { location } = this.props;
+    const { location, yelp } = this.props;
     const currentLocation = location ? location.coords : {};
+    if (!yelp.data) {
+      return <Spinner />;
+    }
     return (
-      <View>
-        <Card>
-          <Text>{currentLocation.longitude}</Text>
-          <Text>{currentLocation.latitude}</Text>
-        </Card>
-        <Card>
-          <Text>List Item</Text>
-        </Card>
-        <Card>
-          <Text>List Item</Text>
-        </Card>
-        <Card>
-          <Text>List Item</Text>
-        </Card>
+      <ScrollView>
+        {this.renderCards()}
         <View>
           <Text onPress={() => firebase.auth().signOut()}>Logout</Text>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
 
-const mapStateToProps = state => ({ location: state.user.location });
+const mapStateToProps = state => ({
+  location: state.user.location,
+  yelp: state.yelp,
+});
 
 export default connect(mapStateToProps, { fetchUserLocation, fetchYelpData })(Nearby);
