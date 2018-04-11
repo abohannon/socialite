@@ -3,18 +3,15 @@ import { View, Text, Image } from 'react-native';
 import { Card } from 'react-native-elements';
 import { Button } from './common';
 
-
-const styles = {
-  imageStyle: {
-    width: '100%',
-    height: '100%',
-    position: 'relative',
-  },
-};
+renderCategories = ({ categories }) => categories.map(category => category.title).join(', ');
 
 const BusinessCard = (props) => {
   const {
-    name, imageUri, rating, reviewCount,
+    name,
+    imageUri,
+    rating,
+    reviewCount,
+    location,
   } = props;
   return (
     <Card
@@ -24,12 +21,23 @@ const BusinessCard = (props) => {
       <View className="card__content">
         <View>
           <Text>
-        Rating: {rating}
+            Rating: {rating}
+          </Text>
+          <Text>
+            Reviews: {reviewCount}
           </Text>
         </View>
         <View>
           <Text>
-        Reviews: {reviewCount}
+            {location.display_address[0]}
+          </Text>
+          <Text>
+            {location.display_address[1]}
+          </Text>
+        </View>
+        <View>
+          <Text>
+            {this.renderCategories(props)}
           </Text>
         </View>
       </View>
