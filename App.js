@@ -27,3 +27,6 @@ export default class App extends Component {
     );
   }
 }
+
+// disable warning notification in simulator
+console.disableYellowBox = true;

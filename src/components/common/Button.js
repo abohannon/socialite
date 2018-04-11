@@ -4,14 +4,17 @@ import { Button as RNEButton } from 'react-native-elements';
 const styles = {
   buttonStyle: {
     borderRadius: 0,
+    marginBottom: 0,
+  },
+  containerViewStyle: {
     marginLeft: 0,
     marginRight: 0,
-    marginBottom: 0,
   },
 };
 
 const primaryProps = {
   backgroundColor: '#03a9fa',
+
 };
 
 const Button = (props) => {
