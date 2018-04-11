@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, View, Text, Image } from 'react-native';
 import firebase from 'firebase';
+import { SearchBar } from 'react-native-elements';
 import { Card, Spinner } from './common';
 import { fetchUserLocation, fetchYelpData } from '../actions';
 import BusinessCard from './BusinessCard';
@@ -45,6 +46,12 @@ class Nearby extends Component {
     }
     return (
       <ScrollView>
+        <SearchBar
+          lightTheme
+          placeholder="Search"
+          icon={{ type: 'font-awesome', name: 'search' }}
+          containerStyle={{ backgroundColor: 'transparent' }}
+        />
         {this.renderCards()}
         <View>
           <Text onPress={() => firebase.auth().signOut()}>Logout</Text>
