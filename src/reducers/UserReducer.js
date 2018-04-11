@@ -2,6 +2,9 @@ import {
   USER_LOCATION_PENDING,
   USER_LOCATION_SUCCESS,
   USER_LOCATION_FAIL,
+  RSVP_PENDING,
+  RSVP_SUCCESS,
+  RSVP_FAIL,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -9,6 +12,7 @@ const INITIAL_STATE = {
   locatingUser: false,
   location: null,
   error: '',
+  message: '',
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -30,6 +34,28 @@ export default (state = INITIAL_STATE, action) => {
       const newState = {
         locatingUser: false,
         location: null,
+        error: action.payload,
+      };
+      return { ...state, ...newState };
+    }
+    case RSVP_PENDING: {
+      const newState = {
+        sendingRSVP: true,
+      };
+      return { ...state, ...newState };
+    }
+    case RSVP_SUCCESS: {
+      const newState = {
+        sendingRSVP: false,
+        message: action.payload,
+        error: '',
+      };
+      return { ...state, ...newState };
+    }
+    case RSVP_FAIL: {
+      const newState = {
+        sendingRSVP: false,
+        message: '',
         error: action.payload,
       };
       return { ...state, ...newState };

@@ -45,6 +45,7 @@ const BusinessCard = (props) => {
     rating,
     reviewCount,
     location,
+    createRSVP,
   } = props;
 
   const {
@@ -91,7 +92,7 @@ const BusinessCard = (props) => {
         </View>
       </View>
       <View className="card__button">
-        <Button>0 Going</Button>
+        <Button onPress={() => props.handleRSVP(name, createRSVP)}>0 Going</Button>
       </View>
     </Card>
   );

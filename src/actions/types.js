@@ -17,3 +17,7 @@ export const USER_LOCATION_FAIL = 'user_location_fail';
 export const FETCH_YELP_PENDING = 'fetch_yelp_pending';
 export const FETCH_YELP_SUCCESS = 'fetch_yelp_success';
 export const FETCH_YELP_FAIL = 'fetch_yelp_fail';
+
+export const RSVP_PENDING = 'rsvp_pending';
+export const RSVP_SUCCESS = 'rsvp_success';
+export const RSVP_FAIL = 'rsvp_fail';
