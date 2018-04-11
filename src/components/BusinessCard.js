@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { Card } from 'react-native-elements';
 import { Button } from './common';
-import { GREY_LIGHT, GREY_DARK, WHITE } from '../constants/style';
+import { GREY_LIGHT, GREY_DARK } from '../constants/style';
 
 const styles = {
   containerStyle: {
