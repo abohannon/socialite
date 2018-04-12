@@ -60,9 +60,6 @@ class Nearby extends Component {
           containerStyle={{ backgroundColor: 'transparent' }}
         />
         {this.renderCards()}
-        <View>
-          <Text onPress={() => firebase.auth().signOut()}>Logout</Text>
-        </View>
       </ScrollView>
     );
   }
