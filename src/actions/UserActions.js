@@ -20,16 +20,20 @@ export const fetchUserLocation = () => async (dispatch) => {
   }
 };
 
-export const createRSVP = businessName => async (dispatch) => {
+export const updateUserRsvp = businessName => async (dispatch) => {
   dispatch({ type: RSVP_PENDING });
 
   try {
     const { currentUser } = firebase.auth();
     const date = Date.now();
 
-    const response = await firebase.database().ref(`/users/${currentUser.uid}/rsvps/`)
-      .push({ date, businessName });
-    dispatch({ type: RSVP_SUCCESS, payload: response });
+    const usersRef = await firebase.database().ref(`users/${currentUser.uid}/rsvps/`);
+
+    await usersRef.child(businessName).set({ date });
+    /* Naming the child of userRef what we want instead of relying on Firebase to generate
+    a random key with the .push() method */
+
+    dispatch({ type: RSVP_SUCCESS, payload: 'RSVP successful' });
   } catch (err) {
     dispatch({ type: RSVP_FAIL, payload: err });
   }
