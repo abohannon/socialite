@@ -6,6 +6,9 @@ import {
   RSVP_PENDING,
   RSVP_SUCCESS,
   RSVP_FAIL,
+  FETCH_RSVPS_PENDING,
+  FETCH_RSVPS_SUCCESS,
+  FETCH_RSVPS_FAIL,
 } from './types';
 
 export const fetchUserLocation = () => async (dispatch) => {
@@ -39,3 +42,22 @@ export const updateUserRsvp = businessName => async (dispatch) => {
   }
 };
 
+export const fetchRsvps = () => async (dispatch) => {
+  dispatch({ type: FETCH_RSVPS_PENDING });
+
+  try {
+    const { currentUser } = firebase.auth();
+
+    const usersRef = await firebase.database().ref(`users/${currentUser.uid}/rsvps/`);
+
+    await usersRef.on('value', (snapshot) => {
+      const rsvpData = snapshot.val();
+
+      const result = Object.keys(rsvpData).map(key => key);
+
+      dispatch({ type: FETCH_RSVPS_SUCCESS, payload: result });
+    });
+  } catch (err) {
+    dispatch({ type: FETCH_RSVPS_FAIL, payload: err });
+  }
+};

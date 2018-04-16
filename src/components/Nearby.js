@@ -21,11 +21,6 @@ class Nearby extends Component {
     }
   }
 
-  handleRSVP(businessName, updateUserRsvp) {
-    updateUserRsvp(businessName);
-    console.log(businessName);
-  }
-
   renderCards(props) {
     const { yelp } = this.props;
 
@@ -39,7 +34,6 @@ class Nearby extends Component {
         url={item.url}
         location={item.location}
         categories={item.categories}
-        handleRSVP={this.handleRSVP}
         updateUserRsvp={this.props.updateUserRsvp}
       />
     ));

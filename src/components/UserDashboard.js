@@ -1,12 +1,31 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { View, Text } from 'react-native';
+import { fetchRsvps } from '../actions';
+import { Spinner } from './common';
 
 class UserDashboard extends Component {
+  componentDidMount() {
+    this.props.fetchRsvps();
+  }
+
+  renderRsvps() {
+    const { rsvps } = this.props.user;
+    return rsvps.map(item => <Text>{item}</Text>);
+  }
+
   render() {
+    if (this.props.user.fetchingRsvps) {
+      return <Spinner />;
+    }
     return (
-      <View />
+      <View>
+        {this.renderRsvps()}
+      </View>
     );
   }
 }
 
-export default UserDashboard;
+const mapStateToProps = state => ({ user: state.user });
+
+export default connect(mapStateToProps, { fetchRsvps })(UserDashboard);

@@ -5,6 +5,9 @@ import {
   RSVP_PENDING,
   RSVP_SUCCESS,
   RSVP_FAIL,
+  FETCH_RSVPS_PENDING,
+  FETCH_RSVPS_SUCCESS,
+  FETCH_RSVPS_FAIL,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -13,6 +16,7 @@ const INITIAL_STATE = {
   location: null,
   error: '',
   message: '',
+  rsvps: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -56,6 +60,26 @@ export default (state = INITIAL_STATE, action) => {
       const newState = {
         sendingRSVP: false,
         message: '',
+        error: action.payload,
+      };
+      return { ...state, ...newState };
+    }
+    case FETCH_RSVPS_PENDING: {
+      const newState = {
+        fetchingRsvps: true,
+      };
+      return { ...state, ...newState };
+    }
+    case FETCH_RSVPS_SUCCESS: {
+      const newState = {
+        fetchingRsvps: false,
+        rsvps: action.payload,
+      };
+      return { ...state, ...newState };
+    }
+    case FETCH_RSVPS_FAIL: {
+      const newState = {
+        fetchingRsvps: false,
         error: action.payload,
       };
       return { ...state, ...newState };

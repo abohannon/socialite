@@ -35,6 +35,9 @@ const styles = {
   },
 };
 
+const handleOnPress = (props, businessName) => {
+  props.updateUserRsvp(businessName);
+};
 
 const renderCategories = ({ categories }) => categories.map(category => category.title).join(', ');
 
@@ -47,6 +50,14 @@ const BusinessCard = (props) => {
     location,
     updateUserRsvp,
   } = props;
+
+  const businessData = {
+    name,
+    imageUri,
+    rating,
+    reviewCount,
+    location,
+  };
 
   const {
     containerStyle,
@@ -92,7 +103,7 @@ const BusinessCard = (props) => {
         </View>
       </View>
       <View className="card__button">
-        <Button onPress={() => props.handleRSVP(name, updateUserRsvp)}>0 Going</Button>
+        <Button onPress={() => handleOnPress(props, name)}>0 Going</Button>
       </View>
     </Card>
   );
