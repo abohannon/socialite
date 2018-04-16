@@ -11,6 +11,11 @@ class UserDashboard extends Component {
 
   renderRsvps() {
     const { rsvps } = this.props.user;
+
+    if (rsvps === null || rsvps === undefined) {
+      return <Text>No RSVPs found.</Text>;
+    }
+
     return rsvps.map(item => <Text>{item}</Text>);
   }
 
