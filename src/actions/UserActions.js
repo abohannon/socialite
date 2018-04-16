@@ -53,9 +53,12 @@ export const fetchRsvps = () => async (dispatch) => {
     await usersRef.on('value', (snapshot) => {
       const rsvpData = snapshot.val();
 
-      const result = Object.keys(rsvpData).map(key => key);
-
-      dispatch({ type: FETCH_RSVPS_SUCCESS, payload: result });
+      if (rsvpData !== null) {
+        const result = Object.keys(rsvpData).map(key => key);
+        dispatch({ type: FETCH_RSVPS_SUCCESS, payload: result });
+      } else {
+        dispatch({ type: FETCH_RSVPS_SUCCESS, payload: rsvpData });
+      }
     });
   } catch (err) {
     dispatch({ type: FETCH_RSVPS_FAIL, payload: err });
