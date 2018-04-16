@@ -28,11 +28,11 @@ export const updateUserRsvp = businessName => async (dispatch) => {
 
   try {
     const { currentUser } = firebase.auth();
-    const date = Date.now();
 
-    const usersRef = await firebase.database().ref(`users/${currentUser.uid}/rsvps/`);
+    const usersRef = await firebase.database().ref(`users/${currentUser.uid}/`);
 
-    await usersRef.child(businessName).set({ date });
+    await usersRef.child('name').set(currentUser.displayName);
+    await usersRef.child('places').update({ [businessName]: true });
     /* Naming the child of userRef what we want instead of relying on Firebase to generate
     a random key with the .push() method */
 
