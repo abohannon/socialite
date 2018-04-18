@@ -49,6 +49,8 @@ const BusinessCard = (props) => {
     reviewCount,
     location,
     updateUserRsvp,
+    categories,
+    url,
   } = props;
 
   const placeData = {
@@ -57,6 +59,8 @@ const BusinessCard = (props) => {
     rating,
     reviewCount,
     location,
+    categories,
+    url,
   };
 
   const {

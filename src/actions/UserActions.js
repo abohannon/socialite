@@ -70,26 +70,23 @@ export const fetchRsvps = () => async (dispatch) => {
   dispatch({ type: FETCH_RSVPS_PENDING });
 
   try {
-    const { currentUser } = firebase.auth();
+    const { currentUser } = await firebase.auth();
+    const db = await firebase.database();
+    const usersRef = await db.ref(`users/${currentUser.uid}/places/`);
 
-    const db = firebase.database();
-    const usersRef = db.ref(`users/${currentUser.uid}/places/`);
-
-    await usersRef.on('value', (userSnapshot) => {
+    await usersRef.on('value', async (userSnapshot) => {
       const filteredPlaces = [];
 
-      userSnapshot.forEach((child) => {
+      await userSnapshot.forEach((child) => {
         const placesRef = db.ref(`places/${child.key}`);
-        placesRef.on('value', (snap) => {
-          filteredPlaces.push(snap.val());
+
+        placesRef.on('value', (placesSnap) => {
+          filteredPlaces.push(placesSnap.val());
+          console.log('inside', placesSnap.val());
         });
       });
-
-      if (userSnapshot !== null) {
-        dispatch({ type: FETCH_RSVPS_SUCCESS, payload: filteredPlaces });
-      } else {
-        dispatch({ type: FETCH_RSVPS_SUCCESS, payload: userSnapshot });
-      }
+      // TODO: Debug the async await and see where the issue was.
+      await dispatch({ type: FETCH_RSVPS_SUCCESS, payload: filteredPlaces });
     });
   } catch (err) {
     dispatch({ type: FETCH_RSVPS_FAIL, payload: err });

@@ -4,7 +4,7 @@ import { ScrollView, View, Text, Image } from 'react-native';
 import firebase from 'firebase';
 import { SearchBar } from 'react-native-elements';
 import { Card, Spinner } from './common';
-import { fetchUserLocation, fetchYelpData, updateUserRsvp } from '../actions';
+import { fetchUserLocation, fetchYelpData, updateUserRsvp, fetchRsvps } from '../actions';
 import BusinessCard from './BusinessCard';
 
 class Nearby extends Component {
@@ -14,10 +14,11 @@ class Nearby extends Component {
   }
 
   componentDidUpdate(nextProps) {
-    const { fetchYelpData, location } = this.props;
+    const { fetchYelpData, location, fetchRsvps } = this.props;
 
     if (this.props.location !== nextProps.location) {
       fetchYelpData(location.coords);
+      fetchRsvps();
     }
   }
 
@@ -68,4 +69,5 @@ export default connect(mapStateToProps, {
   fetchUserLocation,
   fetchYelpData,
   updateUserRsvp,
+  fetchRsvps,
 })(Nearby);
