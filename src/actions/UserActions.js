@@ -66,23 +66,29 @@ export const updateUserRsvp = placeData => async (dispatch) => {
   }
 };
 
-// TODO: Refactor based on updated data structure
 export const fetchRsvps = () => async (dispatch) => {
   dispatch({ type: FETCH_RSVPS_PENDING });
 
   try {
     const { currentUser } = firebase.auth();
 
-    const usersRef = await firebase.database().ref(`users/${currentUser.uid}/rsvps/`);
+    const db = firebase.database();
+    const usersRef = db.ref(`users/${currentUser.uid}/places/`);
 
-    await usersRef.on('value', (snapshot) => {
-      const rsvpData = snapshot.val();
+    await usersRef.on('value', (userSnapshot) => {
+      const filteredPlaces = [];
 
-      if (rsvpData !== null) {
-        const result = Object.keys(rsvpData).map(key => key);
-        dispatch({ type: FETCH_RSVPS_SUCCESS, payload: result });
+      userSnapshot.forEach((child) => {
+        const placesRef = db.ref(`places/${child.key}`);
+        placesRef.on('value', (snap) => {
+          filteredPlaces.push(snap.val());
+        });
+      });
+
+      if (userSnapshot !== null) {
+        dispatch({ type: FETCH_RSVPS_SUCCESS, payload: filteredPlaces });
       } else {
-        dispatch({ type: FETCH_RSVPS_SUCCESS, payload: rsvpData });
+        dispatch({ type: FETCH_RSVPS_SUCCESS, payload: userSnapshot });
       }
     });
   } catch (err) {
