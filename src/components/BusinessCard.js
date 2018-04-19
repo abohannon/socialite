@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Image } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 import { Card } from 'react-native-elements';
 import { Button } from './common';
 import { GREY_LIGHT, GREY_DARK } from '../constants/style';
@@ -35,82 +35,108 @@ const styles = {
   },
 };
 
-const handleOnPress = (props, placeData) => {
-  props.updateUserRsvp(placeData);
-};
+class BusinessCard extends Component {
+  state = {
+    count: 0,
+  }
 
-const renderCategories = ({ categories }) => categories.map(category => category.title).join(', ');
+  componentDidMount() {
+    this.updateCount();
+  }
 
-const BusinessCard = (props) => {
-  const {
-    name,
-    imageUri,
-    rating,
-    reviewCount,
-    location,
-    updateUserRsvp,
-    categories,
-    url,
-  } = props;
+  updateCount = () => {
+    const { places, name } = this.props;
 
-  const placeData = {
-    name,
-    imageUri,
-    rating,
-    reviewCount,
-    location,
-    categories,
-    url,
+    if (places.data && places.data[name]) {
+      const { rsvps } = places.data[name];
+      console.log(Object.keys(rsvps));
+      const count = Object.keys(rsvps).length;
+
+      this.setState({
+        count,
+      });
+    }
+  }
+
+  handleOnPress = (props, placeData) => {
+    props.updateUserRsvp(placeData);
   };
 
-  const {
-    containerStyle,
-    contentStyle,
-    addressContainerStyle,
-    ratingsContainerStyle,
-    ratingsStyle,
-    addressTextStyle,
-    categoriesStyle,
-  } = styles;
+  renderCategories = ({ categories }) => categories.map(category => category.title).join(', ');
 
-  return (
-    <Card
-      image={{ uri: imageUri }}
-      title={name}
-      titleStyle={{ color: GREY_DARK }}
-    >
-      <View style={containerStyle}>
-        <View className="card__content" style={contentStyle}>
-          <View style={addressContainerStyle}>
-            <Text style={addressTextStyle}>
-              {location.display_address[0]}
-            </Text>
-            <Text style={addressTextStyle}>
-              {location.display_address[1]}
+  render() {
+    const {
+      name,
+      imageUri,
+      rating,
+      reviewCount,
+      location,
+      updateUserRsvp,
+      categories,
+      url,
+    } = this.props;
+
+    const placeData = {
+      name,
+      imageUri,
+      rating,
+      reviewCount,
+      location,
+      categories,
+      url,
+    };
+
+    const {
+      containerStyle,
+      contentStyle,
+      addressContainerStyle,
+      ratingsContainerStyle,
+      ratingsStyle,
+      addressTextStyle,
+      categoriesStyle,
+    } = styles;
+
+    return (
+      <Card
+        image={{ uri: imageUri }}
+        title={name}
+        titleStyle={{ color: GREY_DARK }}
+      >
+        <View style={containerStyle}>
+          <View className="card__content" style={contentStyle}>
+            <View style={addressContainerStyle}>
+              <Text style={addressTextStyle}>
+                {location.display_address[0]}
+              </Text>
+              <Text style={addressTextStyle}>
+                {location.display_address[1]}
+              </Text>
+            </View>
+            <View className="card__ratings" style={ratingsContainerStyle}>
+              <View style={ratingsStyle}>
+                <Text>Rating:</Text>
+                <Text>{rating}</Text>
+              </View>
+              <View style={ratingsStyle}>
+                <Text>Reviews:</Text>
+                <Text>{reviewCount}</Text>
+              </View>
+            </View>
+          </View>
+          <View>
+            <Text style={categoriesStyle}>
+              {this.renderCategories(this.props)}
             </Text>
           </View>
-          <View className="card__ratings" style={ratingsContainerStyle}>
-            <View style={ratingsStyle}>
-              <Text>Rating:</Text>
-              <Text>{rating}</Text>
-            </View>
-            <View style={ratingsStyle}>
-              <Text>Reviews:</Text>
-              <Text>{reviewCount}</Text>
-            </View>
-          </View>
         </View>
-        <View>
-          <Text style={categoriesStyle}>
-            {renderCategories(props)}
-          </Text>
+        <View className="card__button">
+          <Button onPress={() => this.handleOnPress(this.props, placeData)}>
+            {this.state.count} Going
+          </Button>
         </View>
-      </View>
-      <View className="card__button">
-        <Button onPress={() => handleOnPress(props, placeData)}>0 Going</Button>
-      </View>
-    </Card>
-  );
-};
+      </Card>
+    );
+  }
+}
 
 export default BusinessCard;

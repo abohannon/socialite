@@ -25,3 +25,7 @@ export const RSVP_FAIL = 'rsvp_fail';
 export const FETCH_RSVPS_PENDING = 'fetch_rsvps_pending';
 export const FETCH_RSVPS_SUCCESS = 'fetch_rsvps_success';
 export const FETCH_RSVPS_FAIL = 'fetch_rsvps_fail';
+
+export const FETCH_PLACES_PENDING = 'fetch_places_pending';
+export const FETCH_PLACES_SUCCESS = 'fetch_places_success';
+export const FETCH_PLACES_FAIL = 'fetch_places_fail';

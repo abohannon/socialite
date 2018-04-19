@@ -11,14 +11,13 @@ class UserDashboard extends Component {
   }
 
   renderRsvps() {
-    const { rsvps, fetchingRsvps } = this.props.user;
+    const { user, places } = this.props;
 
-    if (rsvps.length === 0) {
+    if (user.rsvps.length === 0) {
       return <Text>No RSVPs found.</Text>;
     }
-    console.log('rsvps', rsvps);
 
-    return rsvps.map((item) => {
+    return user.rsvps.map((item) => {
       const { data } = item;
       return (
         <BusinessCard
@@ -30,6 +29,7 @@ class UserDashboard extends Component {
           url={data.url}
           location={data.location}
           categories={data.categories}
+          places={places}
         />
       );
     });
@@ -47,6 +47,9 @@ class UserDashboard extends Component {
   }
 }
 
-const mapStateToProps = state => ({ user: state.user });
+const mapStateToProps = state => ({
+  user: state.user,
+  places: state.places,
+});
 
 export default connect(mapStateToProps, { fetchRsvps })(UserDashboard);

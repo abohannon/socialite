@@ -4,25 +4,40 @@ import { ScrollView, View, Text, Image } from 'react-native';
 import firebase from 'firebase';
 import { SearchBar } from 'react-native-elements';
 import { Card, Spinner } from './common';
-import { fetchUserLocation, fetchYelpData, updateUserRsvp, fetchRsvps } from '../actions';
+import {
+  fetchUserLocation,
+  fetchYelpData,
+  updateUserRsvp,
+  fetchRsvps,
+  fetchPlaces,
+} from '../actions';
 import BusinessCard from './BusinessCard';
 
 class Nearby extends Component {
   componentDidMount() {
-    const { fetchUserLocation } = this.props;
+    const { fetchUserLocation, fetchPlaces } = this.props;
     fetchUserLocation();
+    fetchPlaces();
   }
 
   componentDidUpdate(nextProps) {
-    const { fetchYelpData, location, fetchRsvps } = this.props;
+    const {
+      fetchYelpData,
+      location,
+      places,
+      fetchRsvps,
+      fetchPlaces,
+    } = this.props;
 
-    if (this.props.location !== nextProps.location) {
+    if (location !== nextProps.location) {
       fetchYelpData(location.coords);
-      fetchRsvps();
+      // TODO: Remove coord in favor of user search?
     }
+
+    fetchRsvps();
   }
 
-  renderCards(props) {
+  renderCards() {
     const { yelp } = this.props;
 
     return yelp.data.map((item, index) => (
@@ -36,6 +51,7 @@ class Nearby extends Component {
         location={item.location}
         categories={item.categories}
         updateUserRsvp={this.props.updateUserRsvp}
+        places={this.props.places}
       />
     ));
   }
@@ -63,6 +79,7 @@ class Nearby extends Component {
 const mapStateToProps = state => ({
   location: state.user.location,
   yelp: state.yelp,
+  places: state.places,
 });
 
 export default connect(mapStateToProps, {
@@ -70,4 +87,5 @@ export default connect(mapStateToProps, {
   fetchYelpData,
   updateUserRsvp,
   fetchRsvps,
+  fetchPlaces,
 })(Nearby);
