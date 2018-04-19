@@ -16,6 +16,7 @@ class UserDashboard extends Component {
     if (rsvps.length === 0) {
       return <Text>No RSVPs found.</Text>;
     }
+    console.log('rsvps', rsvps);
 
     return rsvps.map((item) => {
       const { data } = item;
