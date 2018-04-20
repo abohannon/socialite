@@ -15,26 +15,26 @@ import BusinessCard from './BusinessCard';
 
 class Nearby extends Component {
   componentDidMount() {
-    const { fetchUserLocation, fetchPlaces } = this.props;
+    const { fetchUserLocation, fetchPlaces, fetchRsvps } = this.props;
     fetchUserLocation();
     fetchPlaces();
+    fetchRsvps();
   }
 
-  componentDidUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     const {
       fetchYelpData,
       location,
       places,
       fetchRsvps,
       fetchPlaces,
+      user,
     } = this.props;
 
-    if (location !== nextProps.location) {
+    if (location !== prevProps.location) {
       fetchYelpData(location.coords);
       // TODO: Remove coord in favor of user search?
     }
-
-    fetchRsvps();
   }
 
   renderCards() {
@@ -80,6 +80,7 @@ const mapStateToProps = state => ({
   location: state.user.location,
   yelp: state.yelp,
   places: state.places,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, {

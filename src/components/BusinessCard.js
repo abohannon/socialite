@@ -44,13 +44,20 @@ class BusinessCard extends Component {
     this.updateCount();
   }
 
+  componentDidUpdate(prevProps) {
+    const { places } = this.props;
+
+    if (JSON.stringify(prevProps.places.data) !== JSON.stringify(places.data)) {
+      this.updateCount();
+    }
+  }
+
   updateCount = () => {
     const { places, name } = this.props;
 
     if (places.data && places.data[name]) {
       const { rsvps } = places.data[name];
-      console.log(Object.keys(rsvps));
-      const count = Object.keys(rsvps).length;
+      const count = rsvps && Object.keys(rsvps).length;
 
       this.setState({
         count,
