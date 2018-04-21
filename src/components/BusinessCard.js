@@ -38,6 +38,7 @@ const styles = {
 class BusinessCard extends Component {
   state = {
     count: 0,
+    status: false,
   }
 
   componentDidMount() {
@@ -45,10 +46,12 @@ class BusinessCard extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { places } = this.props;
+    const { places, name } = this.props;
 
     if (JSON.stringify(prevProps.places.data) !== JSON.stringify(places.data)) {
-      this.updateCount();
+      if (JSON.stringify(prevProps.places.data[name]) !== JSON.stringify(places.data[name])) {
+        this.updateCount();
+      }
     }
   }
 
@@ -62,6 +65,15 @@ class BusinessCard extends Component {
       this.setState({
         count,
       });
+    }
+  }
+
+  updateStatus = () => {
+    const { places, name } = this.props;
+
+    if (places.data && places.data[name]) {
+
+
     }
   }
 
