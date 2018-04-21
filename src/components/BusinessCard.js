@@ -38,7 +38,6 @@ const styles = {
 class BusinessCard extends Component {
   state = {
     count: 0,
-    status: false,
   }
 
   componentDidMount() {
@@ -60,7 +59,7 @@ class BusinessCard extends Component {
 
     if (places.data && places.data[name]) {
       const { rsvps } = places.data[name];
-      const count = rsvps && Object.keys(rsvps).length;
+      const count = rsvps && Object.keys(rsvps).length || 0;
 
       this.setState({
         count,
@@ -68,17 +67,17 @@ class BusinessCard extends Component {
     }
   }
 
-  updateStatus = () => {
-    const { places, name } = this.props;
-
-    if (places.data && places.data[name]) {
-
-
-    }
-  }
-
   handleOnPress = (props, placeData) => {
-    props.updateUserRsvp(placeData);
+    const rsvps = props.userRsvps.reduce((prev, curr) => {
+      prev[curr.data.name] = curr;
+      return prev;
+    }, {});
+
+    if (rsvps[placeData.name]) {
+      props.removeRsvp(placeData);
+    } else {
+      props.updateUserRsvp(placeData);
+    }
   };
 
   renderCategories = ({ categories }) => categories.map(category => category.title).join(', ');

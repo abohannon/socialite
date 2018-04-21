@@ -51,6 +51,7 @@ export default (state = INITIAL_STATE, action) => {
     case RSVP_PENDING: {
       const newState = {
         sendingRsvp: true,
+        message: '',
       };
       return { ...state, ...newState };
     }
@@ -73,6 +74,7 @@ export default (state = INITIAL_STATE, action) => {
     case RSVP_REMOVE_PENDING: {
       const newState = {
         removingRsvp: true,
+        message: '',
       };
       return { ...state, ...newState };
     }

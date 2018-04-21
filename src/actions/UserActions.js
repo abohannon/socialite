@@ -75,10 +75,13 @@ export const removeRsvp = placeData => async (dispatch) => {
   const { currentUser } = firebase.auth();
   const { name } = placeData;
 
-  const usersRef = firebase.database().ref(`users/${currentUser.uid}/`);
-  const placesRef = firebase.database().ref('places/');
+  const usersRef = firebase.database().ref(`users/${currentUser.uid}/places/${name}`);
+  const placesRef = firebase.database().ref(`places/${name}/rsvps/${currentUser.uid}`);
 
-  Promise.all([usersRef.remove(), placesRef.remove()])
+  const userRemove = await usersRef.remove();
+  const placeRemove = await placesRef.remove();
+
+  Promise.all([userRemove, placeRemove])
     .then(() => dispatch({ type: RSVP_REMOVE_SUCCESS, payload: `Remove ${name}` }))
     .catch(err => dispatch({ type: RSVP_REMOVE_FAIL, payload: err }));
 };

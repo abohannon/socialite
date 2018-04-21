@@ -8,6 +8,7 @@ import {
   fetchUserLocation,
   fetchYelpData,
   updateUserRsvp,
+  removeRsvp,
   fetchRsvps,
   fetchPlaces,
 } from '../actions';
@@ -36,6 +37,16 @@ class Nearby extends Component {
       fetchYelpData(location.coords);
       // TODO: Remove coord in favor of user search?
     }
+
+    if (
+      prevProps.user.sendingRsvp && !user.sendingRsvp
+      || prevProps.user.removingRsvp && !user.removingRsvp
+    ) {
+      if (this.props.user.message) {
+        fetchPlaces();
+        fetchRsvps();
+      }
+    }
   }
 
   renderCards() {
@@ -52,7 +63,9 @@ class Nearby extends Component {
         location={item.location}
         categories={item.categories}
         updateUserRsvp={this.props.updateUserRsvp}
+        removeRsvp={this.props.removeRsvp}
         places={this.props.places}
+        userRsvps={this.props.user.rsvps}
       />
     ));
   }
@@ -88,6 +101,7 @@ export default connect(mapStateToProps, {
   fetchUserLocation,
   fetchYelpData,
   updateUserRsvp,
+  removeRsvp,
   fetchRsvps,
   fetchPlaces,
 })(Nearby);
