@@ -5,6 +5,9 @@ import {
   RSVP_PENDING,
   RSVP_SUCCESS,
   RSVP_FAIL,
+  RSVP_REMOVE_PENDING,
+  RSVP_REMOVE_SUCCESS,
+  RSVP_REMOVE_FAIL,
   FETCH_RSVPS_PENDING,
   FETCH_RSVPS_SUCCESS,
   FETCH_RSVPS_FAIL,
@@ -13,6 +16,9 @@ import {
 const INITIAL_STATE = {
   user: null,
   locatingUser: false,
+  fetchingRsvps: false,
+  sendingRsvp: false,
+  removingRsvp: false,
   location: null,
   error: '',
   message: '',
@@ -44,13 +50,13 @@ export default (state = INITIAL_STATE, action) => {
     }
     case RSVP_PENDING: {
       const newState = {
-        sendingRSVP: true,
+        sendingRsvp: true,
       };
       return { ...state, ...newState };
     }
     case RSVP_SUCCESS: {
       const newState = {
-        sendingRSVP: false,
+        sendingRsvp: false,
         message: action.payload,
         error: '',
       };
@@ -58,7 +64,29 @@ export default (state = INITIAL_STATE, action) => {
     }
     case RSVP_FAIL: {
       const newState = {
-        sendingRSVP: false,
+        sendingRsvp: false,
+        message: '',
+        error: action.payload,
+      };
+      return { ...state, ...newState };
+    }
+    case RSVP_REMOVE_PENDING: {
+      const newState = {
+        removingRsvp: true,
+      };
+      return { ...state, ...newState };
+    }
+    case RSVP_REMOVE_SUCCESS: {
+      const newState = {
+        removingRsvp: false,
+        message: action.payload,
+        error: '',
+      };
+      return { ...state, ...newState };
+    }
+    case RSVP_REMOVE_FAIL: {
+      const newState = {
+        removingRsvp: false,
         message: '',
         error: action.payload,
       };

@@ -6,6 +6,9 @@ import {
   RSVP_PENDING,
   RSVP_SUCCESS,
   RSVP_FAIL,
+  RSVP_REMOVE_PENDING,
+  RSVP_REMOVE_SUCCESS,
+  RSVP_REMOVE_FAIL,
   FETCH_RSVPS_PENDING,
   FETCH_RSVPS_SUCCESS,
   FETCH_RSVPS_FAIL,
@@ -66,21 +69,40 @@ export const updateUserRsvp = placeData => async (dispatch) => {
   }
 };
 
+export const removeRsvp = placeData => async (dispatch) => {
+  dispatch({ type: RSVP_REMOVE_PENDING });
+
+  const { currentUser } = firebase.auth();
+  const { name } = placeData;
+
+  const usersRef = firebase.database().ref(`users/${currentUser.uid}/`);
+  const placesRef = firebase.database().ref('places/');
+
+  Promise.all([usersRef.remove(), placesRef.remove()])
+    .then(() => dispatch({ type: RSVP_REMOVE_SUCCESS, payload: `Remove ${name}` }))
+    .catch(err => dispatch({ type: RSVP_REMOVE_FAIL, payload: err }));
+};
+
 export const fetchRsvps = () => (dispatch) => {
   dispatch({ type: FETCH_RSVPS_PENDING });
 
   const { currentUser } = firebase.auth();
   const db = firebase.database();
-  const usersRef = db.ref(`users/${currentUser.uid}/places/`);
 
-  usersRef
-    .once('value')
-    .then(snap => snap.val())
-    .then(value => Object.keys(value)) // convert snapshots to array
-    .then(keys => keys.map(key => db.ref(`places/${key}`))) // map the keys arr to the places ref
-    .then(refs => refs.map(ref => ref.once('value'))) // map the places ref arr & get promises
-    .then(promises => Promise.all(promises)) // use Promise.all to resolve arr of all promises
-    .then(snaps => snaps.map(snap => snap.val())) // pass resolved promises and get their value
-    .then(placesData => dispatch({ type: FETCH_RSVPS_SUCCESS, payload: placesData }))
-    .catch(err => dispatch({ type: FETCH_RSVPS_FAIL, payload: err }));
+  if (currentUser) {
+    const usersRef = db.ref(`users/${currentUser.uid}/places/`);
+
+    usersRef
+      .once('value')
+      .then(snap => snap.val())
+      .then(value => Object.keys(value)) // convert snapshots to array
+      .then(keys => keys.map(key => db.ref(`places/${key}`))) // map the keys arr to the places ref
+      .then(refs => refs.map(ref => ref.once('value'))) // map the places ref arr & get promises
+      .then(promises => Promise.all(promises)) // use Promise.all to resolve arr of all promises
+      .then(snaps => snaps.map(snap => snap.val())) // pass resolved promises and get their value
+      .then(placesData => dispatch({ type: FETCH_RSVPS_SUCCESS, payload: placesData }))
+      .catch(err => dispatch({ type: FETCH_RSVPS_FAIL, payload: err }));
+  } else {
+    dispatch({ type: FETCH_RSVPS_FAIL, payload: 'No user found' });
+  }
 };

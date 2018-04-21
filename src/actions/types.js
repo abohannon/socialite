@@ -22,6 +22,10 @@ export const RSVP_PENDING = 'rsvp_pending';
 export const RSVP_SUCCESS = 'rsvp_success';
 export const RSVP_FAIL = 'rsvp_fail';
 
+export const RSVP_REMOVE_PENDING = 'rsvp_remove_pending';
+export const RSVP_REMOVE_SUCCESS = 'rsvp_remove_success';
+export const RSVP_REMOVE_FAIL = 'rsvp_remove_fail';
+
 export const FETCH_RSVPS_PENDING = 'fetch_rsvps_pending';
 export const FETCH_RSVPS_SUCCESS = 'fetch_rsvps_success';
 export const FETCH_RSVPS_FAIL = 'fetch_rsvps_fail';

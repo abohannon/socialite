@@ -15,6 +15,7 @@ import BusinessCard from './BusinessCard';
 
 class Nearby extends Component {
   componentDidMount() {
+    console.log('nearby mounted');
     const { fetchUserLocation, fetchPlaces, fetchRsvps } = this.props;
     fetchUserLocation();
     fetchPlaces();
