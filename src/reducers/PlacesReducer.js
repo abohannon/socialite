@@ -6,7 +6,7 @@ import {
 
 const INITIAL_STATE = {
   fetchingPlaces: false,
-  data: null,
+  data: {},
   error: '',
 };
 

@@ -13,7 +13,7 @@ export const fetchPlaces = () => (dispatch) => {
     const placesRef = firebase.database().ref('/places/');
 
     placesRef.on('value', (snapshot) => {
-      const places = snapshot.val();
+      const places = snapshot.val() || {};
 
       dispatch({ type: FETCH_PLACES_SUCCESS, payload: places });
     });
@@ -22,5 +22,5 @@ export const fetchPlaces = () => (dispatch) => {
   }
 };
 
-export const foo = () => {}
-;
+export const foo = () => {};
+
