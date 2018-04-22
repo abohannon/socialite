@@ -110,6 +110,7 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_RSVPS_FAIL: {
       const newState = {
         fetchingRsvps: false,
+        rsvps: [],
         error: action.payload,
       };
       return { ...state, ...newState };

@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, Text } from 'react-native';
-import { fetchRsvps } from '../actions';
+import {
+  fetchRsvps,
+  updateUserRsvp,
+  removeRsvp,
+} from '../actions';
 import { Spinner } from './common';
 import BusinessCard from './BusinessCard';
 
 class UserDashboard extends Component {
   componentDidMount() {
+    console.log('user dash mounted');
     this.props.fetchRsvps();
   }
 
@@ -30,6 +35,9 @@ class UserDashboard extends Component {
           location={data.location}
           categories={data.categories}
           places={places}
+          userRsvps={this.props.user.rsvps}
+          updateUserRsvp={this.props.updateUserRsvp}
+          removeRsvp={this.props.removeRsvp}
         />
       );
     });
@@ -52,4 +60,8 @@ const mapStateToProps = state => ({
   places: state.places,
 });
 
-export default connect(mapStateToProps, { fetchRsvps })(UserDashboard);
+export default connect(mapStateToProps, {
+  fetchRsvps,
+  removeRsvp,
+  updateUserRsvp,
+})(UserDashboard);

@@ -37,7 +37,7 @@ class Nearby extends Component {
       fetchYelpData(location.coords);
       // TODO: Remove coord in favor of user search?
     }
-
+    // TODO: rework this to reduce action dispatches
     if (
       prevProps.user.sendingRsvp && !user.sendingRsvp
       || prevProps.user.removingRsvp && !user.removingRsvp

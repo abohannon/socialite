@@ -36,37 +36,6 @@ const styles = {
 };
 
 class BusinessCard extends Component {
-  state = {
-    count: 0,
-  }
-
-  componentDidMount() {
-    this.updateCount();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { places, name } = this.props;
-
-    if (JSON.stringify(prevProps.places.data) !== JSON.stringify(places.data)) {
-      if (JSON.stringify(prevProps.places.data[name]) !== JSON.stringify(places.data[name])) {
-        this.updateCount();
-      }
-    }
-  }
-
-  updateCount = () => {
-    const { places, name } = this.props;
-
-    if (places.data && places.data[name]) {
-      const { rsvps } = places.data[name];
-      const count = rsvps && Object.keys(rsvps).length || 0;
-
-      this.setState({
-        count,
-      });
-    }
-  }
-
   handleOnPress = (props, placeData) => {
     const rsvps = props.userRsvps.reduce((prev, curr) => {
       prev[curr.data.name] = curr;
@@ -80,6 +49,26 @@ class BusinessCard extends Component {
     }
   };
 
+  renderCount = () => {
+    const { places, name } = this.props;
+
+    let count;
+
+    if (places.data[name] && !places.data[name].rsvp) count = 0;
+
+    if (places.data && places.data[name]) {
+      if (places.data[name].rsvps) {
+        const { rsvps } = places.data[name];
+        const rsvpCount = Object.keys(rsvps).length || 0;
+        count = rsvpCount;
+      }
+    } else {
+      count = 0;
+    }
+
+    return count;
+  }
+
   renderCategories = ({ categories }) => categories.map(category => category.title).join(', ');
 
   render() {
@@ -92,6 +81,7 @@ class BusinessCard extends Component {
       updateUserRsvp,
       categories,
       url,
+      places,
     } = this.props;
 
     const placeData = {
@@ -149,7 +139,7 @@ class BusinessCard extends Component {
         </View>
         <View className="card__button">
           <Button onPress={() => this.handleOnPress(this.props, placeData)}>
-            {this.state.count} Going
+            {this.renderCount()} Going
           </Button>
         </View>
       </Card>
