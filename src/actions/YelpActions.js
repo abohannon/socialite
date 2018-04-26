@@ -6,13 +6,13 @@ import {
 
 const YELP_API_KEY = 'Q7YGqQ-MiWvlVIcK9X064SnW8wL9YXgJAB0v5BzxjWccHcAJYlXhUcCwYig75Xq-jCVqf2pZaE1HatXqKLcJUGhaju7rMIGiYablm0hKmFL1zAsZjN4J3gAKBcHKWnYx';
 
-export const fetchYelpData = params => async (dispatch) => {
+export const fetchYelpData = (location, searchTerm = '') => async (dispatch) => {
   dispatch({ type: FETCH_YELP_PENDING });
-
   const {
     latitude,
     longitude,
-  } = params;
+  } = location;
+
 
   const options = {
     method: 'GET',
@@ -23,7 +23,7 @@ export const fetchYelpData = params => async (dispatch) => {
     },
   };
 
-  const endpoint = `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}`;
+  const endpoint = `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${searchTerm}`;
 
   try {
     // receive the response
@@ -42,4 +42,4 @@ export const fetchYelpData = params => async (dispatch) => {
     dispatch({ type: FETCH_YELP_FAIL, payload: err });
   }
 };
-export const anon = () => {};
+

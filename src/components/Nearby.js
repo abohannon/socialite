@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, View, Text, Image } from 'react-native';
-import firebase from 'firebase';
+import { ScrollView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import { Card, Spinner } from './common';
+import debounce from 'lodash/debounce';
+import { Spinner } from './common';
 import {
   fetchUserLocation,
   fetchYelpData,
@@ -15,6 +15,11 @@ import {
 import BusinessCard from './BusinessCard';
 
 class Nearby extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onChangeTextDelayed = debounce(this.searchPlaces, 500);
+  }
   componentDidMount() {
     const { fetchUserLocation, fetchPlaces, fetchRsvps } = this.props;
     fetchUserLocation();
@@ -46,12 +51,18 @@ class Nearby extends Component {
     }
   }
 
+  searchPlaces = (searchTerm) => {
+    const { location, fetchYelpData } = this.props;
+
+    fetchYelpData(location.coords, searchTerm);
+  }
+
   renderCards() {
     const { yelp } = this.props;
 
     return yelp.data.map((item, index) => (
       <BusinessCard
-        key={item.name}
+        key={index}
         imageUri={item.image_url}
         name={item.name}
         rating={item.rating}
@@ -75,9 +86,13 @@ class Nearby extends Component {
       <ScrollView>
         <SearchBar
           lightTheme
+          showLoading
+          platform="ios"
+          cancelButtonTitle="Cancel"
           placeholder="Search"
           icon={{ type: 'font-awesome', name: 'search' }}
           containerStyle={{ backgroundColor: 'transparent' }}
+          onChangeText={this.onChangeTextDelayed}
         />
         {this.renderCards()}
       </ScrollView>

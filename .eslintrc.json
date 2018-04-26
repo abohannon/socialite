@@ -12,6 +12,7 @@
         "react-native/react-native": true
     },
     "rules": {
+        "import/prefer-default-export": 0,
         "no-debugger": 0,
         "react-native/no-unused-styles": 0,
         "react-native/split-platform-components": 2,
