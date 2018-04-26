@@ -21,5 +21,3 @@ export const fetchPlaces = () => async (dispatch) => {
   }
 };
 
-export const foo = () => {};
-
