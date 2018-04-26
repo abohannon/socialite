@@ -94,7 +94,7 @@ class Nearby extends Component {
         <SearchBar
           lightTheme
           showLoadingIcon={yelp.fetchingData}
-          placeholder="Search"
+          placeholder="Where do you want to go?"
           icon={{ name: 'search' }}
           clearIcon={{ name: 'clear' }}
           containerStyle={{ backgroundColor: 'transparent' }}

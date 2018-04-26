@@ -46,7 +46,7 @@ class Routes extends Component {
             <Scene
               key="userDash"
               component={UserDashboard}
-              title="My Dashboard"
+              title="My RSVPs"
               rightTitle="Logout"
               onRight={() => firebase.auth().signOut()}
             />

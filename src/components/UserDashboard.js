@@ -11,7 +11,6 @@ import BusinessCard from './BusinessCard';
 
 class UserDashboard extends Component {
   componentDidMount() {
-    console.log('user dash mounted');
     this.props.fetchRsvps();
   }
 
