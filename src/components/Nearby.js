@@ -18,7 +18,11 @@ class Nearby extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeTextDelayed = debounce(this.searchPlaces, 500);
+    this.state = {
+      searchTerm: '',
+    };
+
+    this.onChangeTextDelayed = debounce(this.handleSearchInput, 500);
   }
   componentDidMount() {
     const { fetchUserLocation, fetchPlaces, fetchRsvps } = this.props;
@@ -39,7 +43,6 @@ class Nearby extends Component {
 
     if (location !== prevProps.location) {
       fetchYelpData(location.coords);
-      // TODO: Remove coord in favor of user search?
     }
 
     const placeRsvpUpdated = prevProps.user.sendingPlaceRsvp && !user.sendingPlaceRsvp;
@@ -51,10 +54,14 @@ class Nearby extends Component {
     }
   }
 
-  searchPlaces = (searchTerm) => {
+  handleSearchInput = (searchTerm) => {
     const { location, fetchYelpData } = this.props;
 
-    fetchYelpData(location.coords, searchTerm);
+    this.setState({
+      searchTerm,
+    });
+
+    fetchYelpData(location.coords, this.state.searchTerm);
   }
 
   renderCards() {
@@ -86,13 +93,13 @@ class Nearby extends Component {
       <ScrollView>
         <SearchBar
           lightTheme
-          showLoading
-          platform="ios"
-          cancelButtonTitle="Cancel"
+          showLoadingIcon={yelp.fetchingData}
           placeholder="Search"
-          icon={{ type: 'font-awesome', name: 'search' }}
+          icon={{ name: 'search' }}
+          clearIcon={{ name: 'clear' }}
           containerStyle={{ backgroundColor: 'transparent' }}
           onChangeText={this.onChangeTextDelayed}
+          value={this.state.searchTerm}
         />
         {this.renderCards()}
       </ScrollView>
