@@ -2,9 +2,12 @@ import {
   USER_LOCATION_PENDING,
   USER_LOCATION_SUCCESS,
   USER_LOCATION_FAIL,
-  RSVP_PENDING,
-  RSVP_SUCCESS,
-  RSVP_FAIL,
+  USER_RSVP_PENDING,
+  USER_RSVP_SUCCESS,
+  USER_RSVP_FAIL,
+  PLACE_RSVP_PENDING,
+  PLACE_RSVP_SUCCESS,
+  PLACE_RSVP_FAIL,
   RSVP_REMOVE_PENDING,
   RSVP_REMOVE_SUCCESS,
   RSVP_REMOVE_FAIL,
@@ -17,7 +20,8 @@ const INITIAL_STATE = {
   user: null,
   locatingUser: false,
   fetchingRsvps: false,
-  sendingRsvp: false,
+  sendingUserRsvp: false,
+  sendingPlaceRsvp: false,
   removingRsvp: false,
   location: null,
   error: '',
@@ -48,24 +52,47 @@ export default (state = INITIAL_STATE, action) => {
       };
       return { ...state, ...newState };
     }
-    case RSVP_PENDING: {
+    case USER_RSVP_PENDING: {
       const newState = {
-        sendingRsvp: true,
+        sendingUserRsvp: true,
         message: '',
       };
       return { ...state, ...newState };
     }
-    case RSVP_SUCCESS: {
+    case USER_RSVP_SUCCESS: {
       const newState = {
-        sendingRsvp: false,
+        sendingUserRsvp: false,
         message: action.payload,
         error: '',
       };
       return { ...state, ...newState };
     }
-    case RSVP_FAIL: {
+    case USER_RSVP_FAIL: {
       const newState = {
-        sendingRsvp: false,
+        sendingUserRsvp: false,
+        message: '',
+        error: action.payload,
+      };
+      return { ...state, ...newState };
+    }
+    case PLACE_RSVP_PENDING: {
+      const newState = {
+        sendingPlaceRsvp: true,
+        message: '',
+      };
+      return { ...state, ...newState };
+    }
+    case PLACE_RSVP_SUCCESS: {
+      const newState = {
+        sendingPlaceRsvp: false,
+        message: action.payload,
+        error: '',
+      };
+      return { ...state, ...newState };
+    }
+    case PLACE_RSVP_FAIL: {
+      const newState = {
+        sendingPlaceRsvp: false,
         message: '',
         error: action.payload,
       };

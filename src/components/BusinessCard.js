@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Card } from 'react-native-elements';
+import { removeRsvp, updateUserRsvp, updatePlaceRsvp } from '../actions';
 import { Button } from './common';
 import { GREY_LIGHT, GREY_DARK } from '../constants/style';
 
@@ -46,6 +48,7 @@ class BusinessCard extends Component {
       props.removeRsvp(placeData);
     } else {
       props.updateUserRsvp(placeData);
+      props.updatePlaceRsvp(placeData);
     }
   };
 
@@ -66,7 +69,9 @@ class BusinessCard extends Component {
       count = 0;
     }
 
-    return `${count} Going`;
+    const message = `${count} Going`;
+
+    return message;
   }
 
   renderCategories = ({ categories }) => categories.map(category => category.title).join(', ');
@@ -147,4 +152,6 @@ class BusinessCard extends Component {
   }
 }
 
-export default BusinessCard;
+export default connect(null, {
+  removeRsvp, updateUserRsvp, updatePlaceRsvp,
+})(BusinessCard);

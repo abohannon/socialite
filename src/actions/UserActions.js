@@ -3,9 +3,12 @@ import {
   USER_LOCATION_PENDING,
   USER_LOCATION_SUCCESS,
   USER_LOCATION_FAIL,
-  RSVP_PENDING,
-  RSVP_SUCCESS,
-  RSVP_FAIL,
+  USER_RSVP_PENDING,
+  USER_RSVP_SUCCESS,
+  USER_RSVP_FAIL,
+  PLACE_RSVP_PENDING,
+  PLACE_RSVP_SUCCESS,
+  PLACE_RSVP_FAIL,
   RSVP_REMOVE_PENDING,
   RSVP_REMOVE_SUCCESS,
   RSVP_REMOVE_FAIL,
@@ -27,46 +30,50 @@ export const fetchUserLocation = () => async (dispatch) => {
 };
 
 export const updateUserRsvp = placeData => async (dispatch) => {
-  dispatch({ type: RSVP_PENDING });
+  dispatch({ type: USER_RSVP_PENDING });
 
   const { currentUser } = firebase.auth();
 
   const { name } = placeData;
 
-  try {
-    /* Save data to our 'users' dataset */
-    const usersRef = await firebase.database().ref(`users/${currentUser.uid}/`);
+  /* Save data to our 'users' dataset */
+  const usersRef = await firebase.database().ref(`users/${currentUser.uid}/`);
 
-    await usersRef.child('name').set(currentUser.displayName);
-    await usersRef.child('places')
-      .update(
-        { [name]: true },
-        (error) => {
-          if (error) {
-            dispatch({ type: RSVP_FAIL, payload: error });
-          } else {
-            dispatch({ type: RSVP_SUCCESS, payload: 'User updated success' });
-          }
-        },
-      );
+  await usersRef.child('name').set(currentUser.displayName);
+  await usersRef.child('places')
+    .update(
+      { [name]: true },
+      (error) => {
+        if (error) {
+          dispatch({ type: USER_RSVP_FAIL, payload: error });
+        } else {
+          dispatch({ type: USER_RSVP_SUCCESS, payload: 'User updated success' });
+        }
+      },
+    );
+};
 
-    /* Save data to our 'places' dataset */
-    const placesRef = await firebase.database().ref(`places/${name}/`);
-    await placesRef.child('data').set(placeData);
-    await placesRef.child('rsvps')
-      .update(
-        { [currentUser.uid]: true },
-        (error) => {
-          if (error) {
-            dispatch({ type: RSVP_FAIL, payload: error });
-          } else {
-            dispatch({ type: RSVP_SUCCESS, payload: 'Place updated success' });
-          }
-        },
-      );
-  } catch (err) {
-    dispatch({ type: RSVP_FAIL, payload: err });
-  }
+export const updatePlaceRsvp = placeData => async (dispatch) => {
+  dispatch({ type: PLACE_RSVP_PENDING });
+
+  const { currentUser } = firebase.auth();
+
+  const { name } = placeData;
+
+  /* Save data to our 'places' dataset */
+  const placesRef = await firebase.database().ref(`places/${name}/`);
+  await placesRef.child('data').set(placeData);
+  await placesRef.child('rsvps')
+    .update(
+      { [currentUser.uid]: true },
+      (error) => {
+        if (error) {
+          dispatch({ type: PLACE_RSVP_FAIL, payload: error });
+        } else {
+          dispatch({ type: PLACE_RSVP_SUCCESS, payload: 'Place updated success' });
+        }
+      },
+    );
 };
 
 export const removeRsvp = placeData => async (dispatch) => {

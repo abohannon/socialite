@@ -18,9 +18,13 @@ export const FETCH_YELP_PENDING = 'fetch_yelp_pending';
 export const FETCH_YELP_SUCCESS = 'fetch_yelp_success';
 export const FETCH_YELP_FAIL = 'fetch_yelp_fail';
 
-export const RSVP_PENDING = 'rsvp_pending';
-export const RSVP_SUCCESS = 'rsvp_success';
-export const RSVP_FAIL = 'rsvp_fail';
+export const USER_RSVP_PENDING = 'user_rsvp_pending';
+export const USER_RSVP_SUCCESS = 'user_rsvp_success';
+export const USER_RSVP_FAIL = 'user_rsvp_fail';
+
+export const PLACE_RSVP_PENDING = 'place_rsvp_pending';
+export const PLACE_RSVP_SUCCESS = 'place_rsvp_success';
+export const PLACE_RSVP_FAIL = 'place_rsvp_fail';
 
 export const RSVP_REMOVE_PENDING = 'rsvp_remove_pending';
 export const RSVP_REMOVE_SUCCESS = 'rsvp_remove_success';

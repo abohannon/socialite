@@ -16,7 +16,6 @@ import BusinessCard from './BusinessCard';
 
 class Nearby extends Component {
   componentDidMount() {
-    console.log('nearby mounted');
     const { fetchUserLocation, fetchPlaces, fetchRsvps } = this.props;
     fetchUserLocation();
     fetchPlaces();
@@ -37,15 +36,13 @@ class Nearby extends Component {
       fetchYelpData(location.coords);
       // TODO: Remove coord in favor of user search?
     }
-    // TODO: rework this to reduce action dispatches
-    if (
-      prevProps.user.sendingRsvp && !user.sendingRsvp
-      || prevProps.user.removingRsvp && !user.removingRsvp
-    ) {
-      if (this.props.user.message) {
-        fetchPlaces();
-        fetchRsvps();
-      }
+
+    const placeRsvpUpdated = prevProps.user.sendingPlaceRsvp && !user.sendingPlaceRsvp;
+    const placeRsvpRemoved = prevProps.user.removingRsvp && !user.removingRsvp;
+
+    if (placeRsvpUpdated || placeRsvpRemoved) {
+      fetchPlaces();
+      fetchRsvps();
     }
   }
 
@@ -62,8 +59,6 @@ class Nearby extends Component {
         url={item.url}
         location={item.location}
         categories={item.categories}
-        updateUserRsvp={this.props.updateUserRsvp}
-        removeRsvp={this.props.removeRsvp}
         places={this.props.places}
         userRsvps={this.props.user.rsvps}
       />
