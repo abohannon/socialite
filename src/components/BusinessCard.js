@@ -66,7 +66,7 @@ class BusinessCard extends Component {
       count = 0;
     }
 
-    return count;
+    return `${count} Going`;
   }
 
   renderCategories = ({ categories }) => categories.map(category => category.title).join(', ');
@@ -139,7 +139,7 @@ class BusinessCard extends Component {
         </View>
         <View className="card__button">
           <Button onPress={() => this.handleOnPress(this.props, placeData)}>
-            {this.renderCount()} Going
+            {this.renderCount()}
           </Button>
         </View>
       </Card>
