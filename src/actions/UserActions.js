@@ -91,6 +91,14 @@ export const removeRsvp = placeData => async (dispatch) => {
   Promise.all([userRemove, placeRemove])
     .then(() => dispatch({ type: RSVP_REMOVE_SUCCESS, payload: `Remove ${name}` }))
     .catch(err => dispatch({ type: RSVP_REMOVE_FAIL, payload: err }));
+
+  // cleanup places in db with no rsvps so we're not needlessly loading them
+  const parentPlacesRef = await firebase.database().ref(`places/${name}`);
+  const parentSnapshot = await parentPlacesRef.once('value');
+
+  if (!parentSnapshot.hasChild('rsvp')) {
+    parentPlacesRef.remove();
+  }
 };
 
 export const fetchRsvps = () => (dispatch) => {
