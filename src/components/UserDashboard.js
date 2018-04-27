@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import {
   fetchRsvps,
   updateUserRsvp,
@@ -8,7 +8,16 @@ import {
 } from '../actions';
 import { Spinner } from './common';
 import BusinessCard from './BusinessCard';
+import { GREY_LIGHT } from '../constants/style';
 
+const styles = {
+  containerStyle: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 32,
+  },
+};
 class UserDashboard extends Component {
   componentDidMount() {
     this.props.fetchRsvps();
@@ -18,7 +27,11 @@ class UserDashboard extends Component {
     const { user, places } = this.props;
 
     if (user.rsvps.length === 0) {
-      return <Text>No RSVPs found.</Text>;
+      return (
+        <View style={styles.containerStyle}>
+          <Text style={{ color: GREY_LIGHT }}>You haven't RSVP'd anywhere yet!</Text>
+        </View>
+      );
     }
 
     return user.rsvps.map((item) => {
