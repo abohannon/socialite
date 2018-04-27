@@ -85,7 +85,9 @@ class Nearby extends Component {
 
   render() {
     const { location, yelp } = this.props;
-    const currentLocation = location ? location.coords : {};
+
+    const clearIcon = this.state.searchTerm.length === 0 ? null : { name: 'clear' };
+
     if (!yelp.data) {
       return <Spinner />;
     }
@@ -96,7 +98,7 @@ class Nearby extends Component {
           showLoadingIcon={yelp.fetchingData}
           placeholder="Where do you want to go?"
           icon={{ name: 'search' }}
-          clearIcon={{ name: 'clear' }}
+          clearIcon={clearIcon}
           containerStyle={{ backgroundColor: 'transparent' }}
           onChangeText={this.onChangeTextDelayed}
           value={this.state.searchTerm}
