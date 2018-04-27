@@ -31,6 +31,10 @@ class UserDashboard extends Component {
           rating={data.rating}
           reviewCount={data.reviewCount}
           url={data.url}
+          displayPhone={data.display_phone}
+          phone={data.phone}
+          price={data.price}
+          isClosed={data.is_closed}
           location={data.location}
           categories={data.categories}
           places={places}

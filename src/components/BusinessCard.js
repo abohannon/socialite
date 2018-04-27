@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Card } from 'react-native-elements';
+import Communications from 'react-native-communications';
 import { removeRsvp, updateUserRsvp, updatePlaceRsvp } from '../actions';
 import { Button } from './common';
-import { GREY_LIGHT, GREY_DARK } from '../constants/style';
+import { GREY_LIGHT, GREY_DARK, GREEN, RED_BROWN } from '../constants/style';
 
 const styles = {
   containerStyle: {
@@ -34,6 +35,24 @@ const styles = {
   categoriesStyle: {
     fontSize: 12,
     color: GREY_LIGHT,
+  },
+  detailsContainerStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 4,
+  },
+  phoneStyle: {
+    fontSize: 12,
+  },
+  openStyle: {
+    color: GREEN,
+    fontSize: 12,
+    marginLeft: 8,
+  },
+  closedStyle: {
+    color: RED_BROWN,
+    fontSize: 12,
+    marginLeft: 8,
   },
 };
 
@@ -76,6 +95,14 @@ class BusinessCard extends Component {
 
   renderCategories = ({ categories }) => categories.map(category => category.title).join(', ');
 
+  renderOpenStatus = ({ openStyle, closedStyle }) => {
+    if (this.props.isClosed) {
+      return <Text style={closedStyle}>Closed</Text>;
+    }
+
+    return <Text style={openStyle}>Open</Text>;
+  }
+
   render() {
     const {
       name,
@@ -87,6 +114,10 @@ class BusinessCard extends Component {
       categories,
       url,
       places,
+      price,
+      phone,
+      displayPhone,
+      isClosed,
     } = this.props;
 
     const placeData = {
@@ -97,6 +128,10 @@ class BusinessCard extends Component {
       location,
       categories,
       url,
+      price,
+      phone,
+      displayPhone,
+      isClosed,
     };
 
     const {
@@ -107,6 +142,10 @@ class BusinessCard extends Component {
       ratingsStyle,
       addressTextStyle,
       categoriesStyle,
+      detailsContainerStyle,
+      phoneStyle,
+      openStyle,
+      closedStyle,
     } = styles;
 
     return (
@@ -124,6 +163,15 @@ class BusinessCard extends Component {
               <Text style={addressTextStyle}>
                 {location.display_address[1]}
               </Text>
+              <View style={detailsContainerStyle}>
+                <Text
+                  style={phoneStyle}
+                  onPress={() => Communications.phonecall(phone, true)}
+                >
+                  {displayPhone}
+                </Text>
+                {this.renderOpenStatus(styles)}
+              </View>
             </View>
             <View className="card__ratings" style={ratingsContainerStyle}>
               <View style={ratingsStyle}>
@@ -133,6 +181,10 @@ class BusinessCard extends Component {
               <View style={ratingsStyle}>
                 <Text>Reviews:</Text>
                 <Text>{reviewCount}</Text>
+              </View>
+              <View style={ratingsStyle}>
+                <Text>Price:</Text>
+                <Text>{price}</Text>
               </View>
             </View>
           </View>

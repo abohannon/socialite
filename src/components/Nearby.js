@@ -75,6 +75,10 @@ class Nearby extends Component {
         rating={item.rating}
         reviewCount={item.review_count}
         url={item.url}
+        displayPhone={item.display_phone}
+        phone={item.phone}
+        price={item.price}
+        isClosed={item.is_closed}
         location={item.location}
         categories={item.categories}
         places={this.props.places}
