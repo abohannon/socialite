@@ -3,7 +3,7 @@ import { Button as RNEButton } from 'react-native-elements';
 
 const styles = {
   buttonStyle: {
-    borderRadius: 0,
+    borderRadius: 50,
     marginBottom: 0,
   },
   containerViewStyle: {
