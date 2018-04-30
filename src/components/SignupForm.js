@@ -1,14 +1,40 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import { Card } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import { Button, Input, Spinner } from './common';
 import { createUser } from '../actions';
+import { WHITE, BLACK, PURPLE, BACKGROUND2_URI } from '../constants/style';
 
 const styles = {
+  containerStyle: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  formContainerStyle: {
+    width: 250,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 128,
+  },
   buttonContainerStyle: {
-    height: 100,
     width: '100%',
+    marginTop: 32,
+  },
+  imageBackgroundContainer: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: BLACK,
+  },
+  imageBackgroundStyle: {
+    opacity: 0.7,
+  },
+  bottomTextContainerStyle: {
+    textAlign: 'center',
+    marginTop: 16,
+    color: PURPLE,
   },
 };
 
@@ -30,28 +56,44 @@ class SignupForm extends Component {
   }
 
   render() {
+    const {
+      containerStyle,
+      imageBackgroundContainer,
+      imageBackgroundStyle,
+      formContainerStyle,
+      buttonContainerStyle,
+      bottomTextContainerStyle,
+    } = styles;
     return (
-      <Card>
-        <Input
-          label="First Name"
-          onChangeText={firstName => this.setState({ firstName })}
-          placeholder="John"
-        />
-        <Input
-          label="Email"
-          onChangeText={email => this.setState({ email })}
-          placeholder="user@gmail.com"
-        />
-        <Input
-          label="Password"
-          onChangeText={password => this.setState({ password })}
-          placeholder="password"
-          secureTextEntry
-        />
-        <View style={styles.buttonContainerStyle}>
-          {this.renderButton()}
-        </View>
-      </Card>
+      <View style={containerStyle}>
+        <ImageBackground
+          style={imageBackgroundContainer}
+          source={{ uri: BACKGROUND2_URI }}
+          imageStyle={imageBackgroundStyle}
+        >
+          <View style={formContainerStyle}>
+            <Input
+              onChangeText={firstName => this.setState({ firstName })}
+              placeholder="John"
+            />
+            <Input
+              onChangeText={email => this.setState({ email })}
+              placeholder="user@gmail.com"
+            />
+            <Input
+              onChangeText={password => this.setState({ password })}
+              placeholder="password"
+              secureTextEntry
+            />
+            <View style={buttonContainerStyle}>
+              {this.renderButton()}
+            </View>
+            <Text style={bottomTextContainerStyle} onPress={() => Actions.login()}>
+              Login
+            </Text>
+          </View>
+        </ImageBackground>
+      </View>
     );
   }
 }

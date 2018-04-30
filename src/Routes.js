@@ -58,7 +58,7 @@ class Routes extends Component {
               key="signup"
               component={SignupForm}
               title="Create Account"
-              backTitle="Login"
+              hideNavBar
             />
           </Scene>
           <Scene key="private">

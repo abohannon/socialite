@@ -5,7 +5,7 @@ import { View, Text, ImageBackground, StatusBar } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { loginUser } from '../actions';
 import { Button, Input, Spinner } from './common';
-import { WHITE, BLACK, PURPLE } from '../constants/style';
+import { WHITE, BLACK, PURPLE, BACKGROUND_URI } from '../constants/style';
 
 
 const createStyles = () => ({
@@ -36,6 +36,11 @@ const createStyles = () => ({
     color: WHITE,
     fontFamily: 'Hiragino Mincho ProN',
   },
+  bottomTextContainerStyle: {
+    textAlign: 'center',
+    marginTop: 16,
+    color: PURPLE,
+  },
   imageBackgroundContainer: {
     width: '100%',
     height: '100%',
@@ -43,11 +48,6 @@ const createStyles = () => ({
   },
   imageBackgroundStyle: {
     opacity: 0.7,
-  },
-  bottomTextContainerStyle: {
-    textAlign: 'center',
-    marginTop: 16,
-    color: PURPLE,
   },
 });
 class LoginForm extends Component {
@@ -84,14 +84,12 @@ class LoginForm extends Component {
       bottomTextContainerStyle,
     } = createStyles();
 
-    const backgroundUri = 'https://images.unsplash.com/photo-1504420379316-1a01ae921844?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f6d64f3a56411aa919cdde3d989d6635&auto=format&fit=crop&w=634&q=80';
-
     return (
       <View style={containerStyle}>
         <StatusBar barStyle="light-content" />
         <ImageBackground
           style={imageBackgroundContainer}
-          source={{ uri: backgroundUri }}
+          source={{ uri: BACKGROUND_URI }}
           imageStyle={imageBackgroundStyle}
         >
           <View style={logoStyle}>
