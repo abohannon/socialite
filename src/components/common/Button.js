@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button as RNEButton } from 'react-native-elements';
+import { PURPLE } from '../../constants/style';
 
 const styles = {
   buttonStyle: {
@@ -13,7 +14,7 @@ const styles = {
 };
 
 const primaryProps = {
-  backgroundColor: '#03a9fa',
+  backgroundColor: PURPLE,
 
 };
 

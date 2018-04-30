@@ -2,17 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, Text, ImageBackground, StatusBar } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import { loginUser } from '../actions';
 import { Button, Input, Spinner } from './common';
-import { WHITE } from '../constants/style';
+import { WHITE, BLACK, PURPLE } from '../constants/style';
 
 
-const styles = {
+const createStyles = () => ({
   containerStyle: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+  },
+  formContainerStyle: {
+    width: 250,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   buttonContainerStyle: {
     width: '100%',
@@ -22,20 +27,29 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 64,
-    marginBottom: 64,
+    marginTop: 88,
+    marginBottom: 48,
   },
   logoTextStyle: {
     fontSize: 36,
     fontWeight: '700',
     color: WHITE,
+    fontFamily: 'Hiragino Mincho ProN',
   },
-  imageBackgroundStyle: {
+  imageBackgroundContainer: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
+    backgroundColor: BLACK,
   },
-};
+  imageBackgroundStyle: {
+    opacity: 0.7,
+  },
+  bottomTextContainerStyle: {
+    textAlign: 'center',
+    marginTop: 16,
+    color: PURPLE,
+  },
+});
 class LoginForm extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
@@ -64,8 +78,11 @@ class LoginForm extends Component {
       logoStyle,
       logoTextStyle,
       buttonContainerStyle,
+      imageBackgroundContainer,
       imageBackgroundStyle,
-    } = styles;
+      formContainerStyle,
+      bottomTextContainerStyle,
+    } = createStyles();
 
     const backgroundUri = 'https://images.unsplash.com/photo-1504420379316-1a01ae921844?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f6d64f3a56411aa919cdde3d989d6635&auto=format&fit=crop&w=634&q=80';
 
@@ -73,32 +90,32 @@ class LoginForm extends Component {
       <View style={containerStyle}>
         <StatusBar barStyle="light-content" />
         <ImageBackground
-          style={imageBackgroundStyle}
+          style={imageBackgroundContainer}
           source={{ uri: backgroundUri }}
+          imageStyle={imageBackgroundStyle}
         >
           <View style={logoStyle}>
             <Text style={logoTextStyle}>
           socialite
             </Text>
           </View>
-          <Card>
-            <View>
-              <Input
-                label="Email"
-                onChangeText={email => this.setState({ email })}
-                placeholder="user@gmail.com"
-              />
-              <Input
-                label="Password"
-                onChangeText={password => this.setState({ password })}
-                placeholder="password"
-                secureTextEntry
-              />
-              <View className="login__button-container" style={buttonContainerStyle}>
-                {this.renderButton()}
-              </View>
+          <View style={formContainerStyle}>
+            <Input
+              onChangeText={email => this.setState({ email })}
+              placeholder="user@gmail.com"
+            />
+            <Input
+              onChangeText={password => this.setState({ password })}
+              placeholder="password"
+              secureTextEntry
+            />
+            <View className="login__button-container" style={buttonContainerStyle}>
+              {this.renderButton()}
             </View>
-          </Card>
+            <Text style={bottomTextContainerStyle} onPress={() => Actions.signup()}>
+                Sign up
+            </Text>
+          </View>
         </ImageBackground>
       </View>
     );

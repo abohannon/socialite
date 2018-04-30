@@ -4,6 +4,9 @@
   "scripts": {
     "react-devtools": "react-devtools"
   },
+  "rnpm": {
+    "assets": ["./assets/fonts"]
+  },
   "dependencies": {
     "expo": "^26.0.0",
     "firebase": "^4.12.1",
