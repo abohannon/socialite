@@ -43,16 +43,15 @@ const styles = {
   },
   phoneStyle: {
     fontSize: 12,
+    marginRight: 8,
   },
   openStyle: {
     color: GREEN,
     fontSize: 12,
-    marginLeft: 8,
   },
   closedStyle: {
     color: RED_BROWN,
     fontSize: 12,
-    marginLeft: 8,
   },
 };
 

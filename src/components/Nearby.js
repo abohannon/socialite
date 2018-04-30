@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { ScrollView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import debounce from 'lodash/debounce';
-import { Spinner } from './common';
+import { Spinner, SearchInput } from './common';
+import { GREY_LIGHT } from '../constants/style';
 import {
   fetchUserLocation,
   fetchYelpData,
@@ -90,22 +91,16 @@ class Nearby extends Component {
   render() {
     const { location, yelp } = this.props;
 
-    const clearIcon = this.state.searchTerm.length === 0 ? null : { name: 'clear' };
-
     if (!yelp.data) {
       return <Spinner />;
     }
     return (
       <ScrollView>
-        <SearchBar
-          lightTheme
+        <SearchInput
           showLoadingIcon={yelp.fetchingData}
-          placeholder="Where do you want to go?"
-          icon={{ name: 'search' }}
-          clearIcon={clearIcon}
-          containerStyle={{ backgroundColor: 'transparent' }}
           onChangeText={this.onChangeTextDelayed}
           value={this.state.searchTerm}
+          placeholder="Where do you want to go?"
         />
         {this.renderCards()}
       </ScrollView>

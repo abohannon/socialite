@@ -88,7 +88,7 @@ class SignupForm extends Component {
             <View style={buttonContainerStyle}>
               {this.renderButton()}
             </View>
-            <Text style={bottomTextContainerStyle} onPress={() => Actions.login()}>
+            <Text style={bottomTextContainerStyle} onPress={() => Actions.pop()}>
               Login
             </Text>
           </View>
