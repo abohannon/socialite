@@ -5,10 +5,17 @@ import { Card } from 'react-native-elements';
 import Communications from 'react-native-communications';
 import { removeRsvp, updateUserRsvp, updatePlaceRsvp } from '../actions';
 import { Button } from './common';
-import { GREY_LIGHT, GREY_DARK, GREEN, RED_BROWN } from '../constants/style';
+import { BLACK, GREY_LIGHT, GREY_DARK, GREEN, RED_BROWN } from '../constants/style';
 
 const styles = {
-  containerStyle: {
+  cardContainerStyle: {
+    borderRadius: 4,
+    shadowColor: BLACK,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  viewContainerStyle: {
     marginBottom: 16,
   },
   contentStyle: {
@@ -134,7 +141,8 @@ class BusinessCard extends Component {
     };
 
     const {
-      containerStyle,
+      cardContainerStyle,
+      viewContainerStyle,
       contentStyle,
       addressContainerStyle,
       ratingsContainerStyle,
@@ -152,8 +160,9 @@ class BusinessCard extends Component {
         image={{ uri: imageUri }}
         title={name}
         titleStyle={{ color: GREY_DARK }}
+        containerStyle={cardContainerStyle}
       >
-        <View style={containerStyle}>
+        <View style={viewContainerStyle}>
           <View className="card__content" style={contentStyle}>
             <View style={addressContainerStyle}>
               <Text style={addressTextStyle}>

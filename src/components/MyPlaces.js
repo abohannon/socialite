@@ -18,7 +18,7 @@ const styles = {
     paddingTop: 32,
   },
 };
-class UserDashboard extends Component {
+class MyPlaces extends Component {
   componentDidMount() {
     this.props.fetchRsvps();
   }
@@ -80,4 +80,4 @@ export default connect(mapStateToProps, {
   fetchRsvps,
   removeRsvp,
   updateUserRsvp,
-})(UserDashboard);
+})(MyPlaces);

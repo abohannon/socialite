@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { Scene, Router, Actions, ActionConst } from 'react-native-router-flux';
 import { Icon } from 'react-native-elements';
-import firebase from 'firebase';
 import { fetchUser } from './actions';
 import { Spinner } from './components/common';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import Nearby from './components/Nearby';
-import UserDashboard from './components/UserDashboard';
+import MyPlaces from './components/MyPlaces';
+import Settings from './components/Settings';
 import { GREY_DARK, WHITE_2 } from './constants/style';
 
 const styles = {
@@ -30,7 +30,7 @@ class Routes extends Component {
     this.props.fetchUser();
   }
 
-  getSceneStyle = (props, computedProps) => {
+  getSceneStyle = (props) => {
     const style = {
       backgroundColor: WHITE_2,
     };
@@ -66,17 +66,31 @@ class Routes extends Component {
               key="nearby"
               component={Nearby}
               title="Nearby"
-              rightTitle="My places"
-              onRight={() => Actions.userDash()}
               titleStyle={styles.titleStyle}
+              leftTitle="Settings"
+              leftButtonTextStyle={{ color: GREY_DARK }}
+              onLeft={() => Actions.settings()}
+              rightTitle="My places"
+              rightButtonTextStyle={{ color: GREY_DARK }}
+              onRight={() => Actions.userDash()}
             />
             <Scene
               key="userDash"
-              component={UserDashboard}
+              component={MyPlaces}
               title="My places"
-              rightTitle="Logout"
-              onRight={() => firebase.auth().signOut()}
               titleStyle={styles.titleStyle}
+              backTitle="Nearby"
+              backButtonTextStyle={{ color: GREY_DARK }}
+              navBarButtonColor={GREY_DARK}
+            />
+            <Scene
+              key="settings"
+              component={Settings}
+              title="Settings"
+              titleStyle={styles.titleStyle}
+              backTitle="Nearby"
+              backButtonTextStyle={{ color: GREY_DARK }}
+              navBarButtonColor={GREY_DARK}
             />
           </Scene>
         </Scene>

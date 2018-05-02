@@ -61,17 +61,6 @@ class LoginForm extends Component {
     password: '',
   }
 
-  renderButton() {
-    if (this.props.loading) {
-      return <Spinner size="small" />;
-    }
-    return (
-      <Button raised onPress={() => this.props.loginUser(this.state)}>
-        Login
-      </Button>
-    );
-  }
-
   render() {
     const {
       containerStyle,
@@ -108,7 +97,13 @@ class LoginForm extends Component {
               secureTextEntry
             />
             <View className="login__button-container" style={buttonContainerStyle}>
-              {this.renderButton()}
+              <Button
+                raised
+                loading={!!this.props.loading}
+                onPress={() => this.props.loginUser(this.state)}
+              >
+                {this.props.loading ? '' : 'Login'}
+              </Button>
             </View>
             <Text style={bottomTextContainerStyle} onPress={() => Actions.signup()}>
                 Sign up
