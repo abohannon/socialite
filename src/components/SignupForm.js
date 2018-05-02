@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
-import { Card } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import { Button, Input, Spinner } from './common';
+import { Button, Input } from './common';
 import { createUser } from '../actions';
-import { WHITE, BLACK, PURPLE, BACKGROUND2_URI } from '../constants/style';
+import { BLACK, BLACK_50, RED_BROWN, PURPLE, BACKGROUND2_URI } from '../constants/style';
 
 const styles = {
   containerStyle: {
@@ -36,6 +35,15 @@ const styles = {
     marginTop: 16,
     color: PURPLE,
   },
+  errorStyle: {
+    color: RED_BROWN,
+    textAlign: 'center',
+    marginTop: 8,
+    padding: 8,
+    backgroundColor: BLACK_50,
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
 };
 
 class SignupForm extends Component {
@@ -43,6 +51,12 @@ class SignupForm extends Component {
     firstName: '',
     email: '',
     password: '',
+  }
+
+  renderErrorMessage = () => {
+    if (this.props.error && this.props.error.errorMessage) {
+      return this.props.error.errorMessage;
+    }
   }
 
   render() {
@@ -53,6 +67,7 @@ class SignupForm extends Component {
       formContainerStyle,
       buttonContainerStyle,
       bottomTextContainerStyle,
+      errorStyle,
     } = styles;
     return (
       <View style={containerStyle}>
@@ -87,6 +102,7 @@ class SignupForm extends Component {
             <Text style={bottomTextContainerStyle} onPress={() => Actions.pop()}>
               Login
             </Text>
+            <Text style={errorStyle}>{this.renderErrorMessage()}</Text>
           </View>
         </ImageBackground>
       </View>
@@ -94,5 +110,8 @@ class SignupForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({ loading: state.auth.creatingUser });
+const mapStateToProps = state => ({
+  loading: state.auth.creatingUser,
+  error: state.auth.error,
+});
 export default connect(mapStateToProps, { createUser })(SignupForm);

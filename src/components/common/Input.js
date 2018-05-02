@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextInput, View, Text } from 'react-native';
+import { View } from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements';
-import { BLACK, WHITE, WHITE_50 } from '../../constants/style';
+import { WHITE, WHITE_50 } from '../../constants/style';
 
 const styles = {
   labelStyle: {
@@ -22,7 +22,7 @@ const styles = {
 
 const Input = (props) => {
   const {
-    label, value, onChangeText, secureTextEntry, placeholder,
+    label, value, onChangeText, secureTextEntry, placeholder, validate,
   } = props;
 
   const { labelStyle, containerStyle, inputStyle } = styles;

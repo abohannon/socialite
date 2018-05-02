@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { View, Text, ImageBackground, StatusBar } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { loginUser } from '../actions';
-import { Button, Input, Spinner } from './common';
-import { WHITE, BLACK, PURPLE, BACKGROUND_URI } from '../constants/style';
+import { Button, Input } from './common';
+import { WHITE, BLACK, BLACK_50, PURPLE, RED_BROWN, BACKGROUND_URI } from '../constants/style';
 
 
 const createStyles = () => ({
@@ -49,6 +49,15 @@ const createStyles = () => ({
   imageBackgroundStyle: {
     opacity: 0.7,
   },
+  errorStyle: {
+    color: RED_BROWN,
+    textAlign: 'center',
+    marginTop: 8,
+    padding: 8,
+    backgroundColor: BLACK_50,
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
 });
 class LoginForm extends Component {
   static propTypes = {
@@ -61,6 +70,12 @@ class LoginForm extends Component {
     password: '',
   }
 
+  renderErrorMessage = () => {
+    if (this.props.error && this.props.error.errorMessage) {
+      return this.props.error.errorMessage;
+    }
+  }
+
   render() {
     const {
       containerStyle,
@@ -71,6 +86,7 @@ class LoginForm extends Component {
       imageBackgroundStyle,
       formContainerStyle,
       bottomTextContainerStyle,
+      errorStyle,
     } = createStyles();
 
     return (
@@ -108,12 +124,16 @@ class LoginForm extends Component {
             <Text style={bottomTextContainerStyle} onPress={() => Actions.signup()}>
                 Sign up
             </Text>
+            <Text style={errorStyle}>{this.renderErrorMessage()}</Text>
           </View>
         </ImageBackground>
       </View>
     );
   }
 }
-const mapStateToProps = state => ({ loading: state.auth.loggingInUser });
+const mapStateToProps = state => ({
+  loading: state.auth.loggingInUser,
+  error: state.auth.error,
+});
 
 export default connect(mapStateToProps, { loginUser })(LoginForm);
