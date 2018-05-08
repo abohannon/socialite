@@ -1,7 +1,7 @@
 ![Dual](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/dual.jpg) 
 
-# Socialiet
-> Social coordination iOS prototype app built with React Native and Firebase
+# Socialite
+> Mobile social coordination prototype built with React Native and Firebase
 
 Demo: https://expo.io/@abo46n2/react-native-socialite
 
@@ -68,7 +68,7 @@ Currently no testing has been implemented. This is something planned for future 
 
 ![Login](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/login.png)  
 
-![Signup](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/Signup.png)  
+![Signup](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/signup.png)  
 
 ![Nearby](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/nearby.png) 
 
@@ -84,7 +84,7 @@ This app is a starting point for a more robust experience. Future features to in
 * Ability to receive push notifications when a friend RSVPs to the same place
 * Archive or calendar or past places you visited
 * Ability to sort/search places by category
-* User authentication needs to be included in a simple component; currently, both Login and Signup forms are separate components with a lot of duplicated code.
+* User authentication needs to be included in a single component; currently, both Login and Signup forms are separate components with a lot of duplicated code.
 
 
 ## Contributing
