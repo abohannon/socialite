@@ -1,4 +1,4 @@
-![Dual](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/dual.jpg) 
+![Main](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/main.jpg) 
 
 # Socialite
 > Mobile social coordination prototype built with React Native and Firebase
