@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView } from 'react-native';
-import { SearchBar } from 'react-native-elements';
 import debounce from 'lodash/debounce';
 import { Spinner, SearchInput } from './common';
-import { GREY_LIGHT } from '../constants/style';
 import {
   fetchUserLocation,
   fetchYelpData,
@@ -89,7 +87,7 @@ class Nearby extends Component {
   }
 
   render() {
-    const { location, yelp } = this.props;
+    const { yelp } = this.props;
 
     if (!yelp.data) {
       return <Spinner />;

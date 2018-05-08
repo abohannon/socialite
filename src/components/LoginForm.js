@@ -70,10 +70,13 @@ class LoginForm extends Component {
     password: '',
   }
 
-  renderErrorMessage = () => {
+  renderErrorMessage = (style) => {
     if (this.props.error && this.props.error.errorMessage) {
-      return this.props.error.errorMessage;
+      return (
+        <Text style={style}>{this.props.error.errorMessage}</Text>
+      );
     }
+    return null;
   }
 
   render() {
@@ -124,7 +127,7 @@ class LoginForm extends Component {
             <Text style={bottomTextContainerStyle} onPress={() => Actions.signup()}>
                 Sign up
             </Text>
-            <Text style={errorStyle}>{this.renderErrorMessage()}</Text>
+            {this.renderErrorMessage(errorStyle)}
           </View>
         </ImageBackground>
       </View>

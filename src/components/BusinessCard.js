@@ -151,8 +151,6 @@ class BusinessCard extends Component {
       categoriesStyle,
       detailsContainerStyle,
       phoneStyle,
-      openStyle,
-      closedStyle,
     } = styles;
 
     return (

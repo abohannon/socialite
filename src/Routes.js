@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Scene, Router, Actions, ActionConst } from 'react-native-router-flux';
-import { Icon } from 'react-native-elements';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 import { fetchUser } from './actions';
 import { Spinner } from './components/common';
 import LoginForm from './components/LoginForm';
@@ -24,13 +23,11 @@ class Routes extends Component {
     fetchUser: PropTypes.func.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-    // check to see if user exists; if so, user is authenticated.
+  componentWillMount() {
     this.props.fetchUser();
   }
 
-  getSceneStyle = (props) => {
+  getSceneStyle = () => {
     const style = {
       backgroundColor: WHITE_2,
     };
