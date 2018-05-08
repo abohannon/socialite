@@ -72,7 +72,7 @@ Currently no testing has been implemented. This is something planned for future 
 
 ![Nearby](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/nearby.png) 
 
-![Search](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/search.png)
+![Search](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/coffee.png)
 
 ![My Places](https://raw.githubusercontent.com/abohannon/socialite/develop/screenshots/myplaces.png) 
 
